@@ -45,23 +45,30 @@ import java.util.*;
 public class WordPieceTokenizerStepRunner extends BaseStepRunner
 {
     private BertWordPieceTokenizerFactory tokenizer;
-    private WordPieceTokenizerStep bertStep;
+    private WordPieceTokenizerStep tokenizerStep;
 
     private ComputationGraph bertModel;
-
-    private final int MAX_LEN = 256;
 
     public WordPieceTokenizerStepRunner(PipelineStep pipelineStep)
     {
         super(pipelineStep);
 
-        this.bertStep = (WordPieceTokenizerStep) pipelineStep;
+        this.tokenizerStep = (WordPieceTokenizerStep) pipelineStep;
 
-        //String inputName = (String) this.bertStep.getInputNames().get(0);
-        //String outputName = (String) this.bertStep.getOutputNames().get(0);
+        //String inputName = (String) this.tokenizerStep.getInputNames().get(0);
+        //String outputName = (String) this.tokenizerStep.getOutputNames().get(0);
 
-        String modelPath = this.bertStep.getModelPath();
-        String vocabPath = this.bertStep.getVocabPath();
+        String modelPath = this.tokenizerStep.getModelPath();
+        String vocabPath = this.tokenizerStep.getVocabPath();
+
+        int sentenceMaxLen = this.tokenizerStep.getSentenceMaxLen();
+
+        String task = this.tokenizerStep.getTask();
+        String lengthHandling = this.tokenizerStep.getLengthHandling();
+
+        System.out.println("sentenceMaxLen: " + sentenceMaxLen);
+        System.out.println("task: " + task);
+        System.out.println("lengthHandling: " + lengthHandling);
 
         //load tokenizer
         try {
@@ -98,7 +105,7 @@ public class WordPieceTokenizerStepRunner extends BaseStepRunner
 
         return BertIterator.builder()
                 .tokenizer(this.tokenizer)
-                .lengthHandling(BertIterator.LengthHandling.FIXED_LENGTH, this.MAX_LEN)
+                .lengthHandling(BertIterator.LengthHandling.FIXED_LENGTH, 256)
                 .minibatchSize(1)
                 .sentenceProvider(provider)
                 .featureArrays(BertIterator.FeatureArrays.INDICES_MASK)

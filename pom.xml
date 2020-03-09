@@ -109,7 +109,7 @@
         <tensorflow.version>1.15.2</tensorflow.version>
 
         <javacpp.version>1.5.3-SNAPSHOT</javacpp.version>
-        <javacpp-presets.version>1.5.3</javacpp-presets.version>
+        <javacpp-presets.version>1.5.3-SNAPSHOT</javacpp-presets.version>
         <javacv.version>1.5.3</javacv.version>
         <opencv.version>4.2.0</opencv.version>
         <cpython.version>3.7.6</cpython.version>

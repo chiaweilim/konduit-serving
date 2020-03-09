@@ -2918,6 +2918,9 @@ class WordPieceTokenizerStep(PipelineStep):
         "outputColumnNames": {"type": dict, "subtype": None},
         "modelPath": {"type": str, "subtype": None},
         "vocabPath": {"type": str, "subtype": None},
+        "sentenceMaxLen": {"type": int, "subtype": None},
+        "task": {"type": str, "subtype": None},
+        "lengthHandling": {"type": str, "subtype": None},
     }
     _formats_map = {
         "inputNames": "table",
@@ -2934,6 +2937,9 @@ class WordPieceTokenizerStep(PipelineStep):
             output_column_names=None,
             model_path=None,
             vocab_path=None,
+            sentence_max_len=None,
+            task=None,
+            length_handling=None,
     ):
         self.__input_schemas = input_schemas
         self.__output_schemas = output_schemas
@@ -2943,6 +2949,9 @@ class WordPieceTokenizerStep(PipelineStep):
         self.__output_column_names = output_column_names
         self.__model_path = model_path
         self.__vocab_path = vocab_path
+        self.__sentence_max_len = sentence_max_len
+        self.__task = task
+        self.__length_handling = length_handling
 
     def _get_input_schemas(self):
         return self.__input_schemas
@@ -3043,6 +3052,36 @@ class WordPieceTokenizerStep(PipelineStep):
         self.__vocab_path = value
 
     vocab_path = property(_get_vocab_path, _set_vocab_path)
+
+    def _get_sentence_max_len(self):
+        return self.__sentence_max_len
+
+    def _set_sentence_max_len(self, value):
+        if not isinstance(value, int):
+            raise TypeError("sentenceMaxLen must be int")
+        self.__sentence_max_len = value
+
+    sentence_max_len = property(_get_sentence_max_len, _set_sentence_max_len)
+
+    def _get_task(self):
+        return self.__task
+
+    def _set_task(self, value):
+        if not isinstance(value, str):
+            raise TypeError("Task must be str")
+        self.__task = value
+
+    task = property(_get_task, _set_task)
+
+    def _get_length_handling(self):
+        return self.__length_handling
+
+    def _set_length_handling(self, value):
+        if not isinstance(value, str):
+            raise TypeError("lengthHandling must be str")
+        self.__task = value
+
+    length_handling = property(_get_length_handling, _set_length_handling)
 
     def as_dict(self):
         d = empty_type_dict(self)

@@ -38,6 +38,10 @@ public class WordPieceTokenizerStep extends BasePipelineStep<WordPieceTokenizerS
 {
     protected String modelPath, vocabPath;
 
+    protected int sentenceMaxLen;
+
+    protected String task, lengthHandling;
+
     @Override
     public Input.DataFormat[] validInputTypes() {
         return new Input.DataFormat[]{
